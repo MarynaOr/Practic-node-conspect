@@ -5,9 +5,10 @@ import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { getEnvVar } from './module-2/lesson-1/utils/getEnvVar.js';
+// import { getEnvVar } from './module-2/lesson-1/utils/getEnvVar.js';
 dotenv.config();
-const PORT = Number(getEnvVar('PORT', '3000'));
+// const PORT = Number(getEnvVar('PORT', '3000'));
+const PORT = Number(process.env.PORT);
 
 export const startServer = () => {
   const app = express();
