@@ -32,6 +32,11 @@ export const startServer = () => {
       //   message: [{}],
     });
   });
+  app.get('/id/', (req, res) => {
+    res.json({
+      id: 5,
+    });
+  });
 
   app.use((req, res, next) => {
     res.status(404).json({
