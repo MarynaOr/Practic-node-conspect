@@ -2,7 +2,7 @@
 
 // Метод findById()  для пошуку одного документа
 
-import { StudentsCollection } from '../../../db/models/students.js';
+import { StudentsCollection } from '../db/models/students.js';
 
 export const getAllStudents = async () => {
   const students =
