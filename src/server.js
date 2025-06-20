@@ -45,7 +45,7 @@ export const startServer = () => {
     });
   });
 
-  app.get('/student', async (req, res) => {
+  app.get('/students', async (req, res) => {
     const students = await getAllStudents();
     res.status(200).json({
       data: students,

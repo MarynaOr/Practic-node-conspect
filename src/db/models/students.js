@@ -23,6 +23,7 @@ const schemaStudents = new Schema(
 );
 
 export const StudentsCollection = model(
-  'students',
+  'Student',
   schemaStudents,
+  'students',
 );
