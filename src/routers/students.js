@@ -5,13 +5,17 @@ import {
   getStudentsByIdController,
   getStudentsController,
 } from '../controllers/student.js';
+import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 const router = Router();
 
-router.get('/students', getStudentsController);
+router.get(
+  '/students',
+  ctrlWrapper(getStudentsController),
+);
 router.get(
   '/students/:studentId',
-  getStudentsByIdController,
+  ctrlWrapper(getStudentsByIdController),
 );
 
 export default router;

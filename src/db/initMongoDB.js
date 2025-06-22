@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { getEnvVar } from '../module-2/lesson-1/utils/getEnvVar.js';
+import { getEnvVar } from '../utils/getEnvVar.js';
 import { ENV_VARS } from '../module-2/lesson-1/constants/constants.js';
 
 export const initMongoDB = async () => {

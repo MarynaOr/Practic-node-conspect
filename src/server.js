@@ -7,6 +7,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { initMongoDB } from './db/initMongoDB.js';
 import studentRouter from './routers/students.js';
+import { errorHandler } from './middlewares/errorHandlers.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
 await initMongoDB();
 dotenv.config();
@@ -37,47 +39,8 @@ export const startServer = () => {
       id: 5,
     });
   });
-
-  // app.get('/students', async (req, res) => {
-  //   const students = await getAllStudents();
-  //   res.status(200).json({
-  //     data: students,
-  //   });
-  // });
-
-  // app.get(
-  //   '/students/:studentId',
-  //   async (req, res, next) => {
-  //     const { studentId } = req.params;
-  //     const student = await getStudentId(
-  //       studentId,
-  //     );
-
-  //     if (!student) {
-  //       res.status(404).json({
-  //         message: 'Student not found',
-  //       });
-  //     }
-  //     res.status(200).json({
-  //       dat: student,
-  //     });
-  //     return;
-  //   },
-  // );
-
-  app.use((req, res, next) => {
-    res.status(404).json({
-      message: 'Not a found',
-    });
-    next();
-  });
-
-  app.use((err, req, res, next) => {
-    res.status(500).json({
-      message: 'Something went wrong',
-      error: err.message,
-    });
-  });
+  app.use(notFoundHandler);
+  app.use(errorHandler);
 
   app.listen(PORT, () => {
     console.log(
