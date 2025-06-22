@@ -1,9 +1,11 @@
+// controllers - контролери
+
+import createHttpError from 'http-errors';
 import {
   getAllStudents,
   getStudentId,
 } from '../services/students.js';
 
-// controllers - контролери
 export const getStudentsController = async (
   req,
   res,
@@ -30,8 +32,10 @@ export const getStudentsByIdController = async (
   const student = await getStudentId(studentId);
 
   if (!student) {
-    next(new Error('Student not found'));
-    return;
+    throw createHttpError(
+      404,
+      'Student not found',
+    );
   }
   res.json({
     status: 200,

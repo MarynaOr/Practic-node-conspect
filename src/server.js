@@ -40,6 +40,7 @@ export const startServer = () => {
     });
   });
   app.use(notFoundHandler);
+  // app.use('*', notFoundHandler);
   app.use(errorHandler);
 
   app.listen(PORT, () => {
