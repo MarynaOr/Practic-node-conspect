@@ -15,3 +15,20 @@ export const getStudentId = async (studentId) => {
     await StudentsCollection.findById(studentId);
   return student;
 };
+
+export const createStudents = async (payload) => {
+  const student = await StudentsCollection.create(
+    payload,
+  );
+  return student;
+};
+
+export const deleteStudent = async (
+  studentId,
+) => {
+  const student =
+    await StudentsCollection.findOneAndDelete({
+      _id: studentId,
+    });
+  return student;
+};

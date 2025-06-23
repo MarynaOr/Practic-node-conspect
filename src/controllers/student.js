@@ -2,6 +2,8 @@
 
 import createHttpError from 'http-errors';
 import {
+  createStudents,
+  deleteStudent,
   getAllStudents,
   getStudentId,
 } from '../services/students.js';
@@ -42,4 +44,36 @@ export const getStudentsByIdController = async (
     message: `Successfully found student with id ${studentId}!`,
     data: student,
   });
+};
+
+export const createStudentControler = async (
+  req,
+  res,
+) => {
+  const student = await createStudents(req.body);
+
+  res.status(201).json({
+    status: 201,
+    message: 'Успішне створення студента!',
+    data: student,
+  });
+};
+
+export const deleteStudentController = async (
+  req,
+  res,
+  next,
+) => {
+  const { studentId } = req.params;
+  const student = await deleteStudent(studentId);
+  if (!student) {
+    next(
+      createHttpError(
+        404,
+        'Такого студента не існує',
+      ),
+    );
+    return;
+  }
+  res.status(204).send();
 };

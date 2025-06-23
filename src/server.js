@@ -42,7 +42,15 @@ export const startServer = () => {
   app.use(notFoundHandler);
   // app.use('*', notFoundHandler);
   app.use(errorHandler);
-
+  app.use(
+    express.json({
+      type: [
+        'application/json',
+        'application/vnd.api+json',
+      ],
+      limit: '100kb',
+    }),
+  );
   app.listen(PORT, () => {
     console.log(
       `Server is running on port http://localhost:${PORT}`,
