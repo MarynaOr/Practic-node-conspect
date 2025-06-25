@@ -77,3 +77,9 @@ export const deleteStudentController = async (
   }
   res.status(204).send();
 };
+export const upsertController = async (
+  req,
+  res,
+) => {
+  const { studentId } = req.params;
+};

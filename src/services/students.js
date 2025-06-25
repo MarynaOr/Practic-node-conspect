@@ -32,3 +32,26 @@ export const deleteStudent = async (
     });
   return student;
 };
+export const updateStudent = async (
+  studentId,
+  payload,
+  option = {},
+) => {
+  const rawResult =
+    await StudentsCollection.findByIdAndUpdate(
+      { _id: studentId },
+      payload,
+      {
+        new: true,
+        includeResultMetadata: true,
+        ...options,
+      },
+    );
+  if (!rawResult || !rawResult.value) return null;
+  return {
+    student: rawResult.value,
+    isNew: Boolean(
+      rawResult?.lastErrorObject?.upserted,
+    ),
+  };
+};
