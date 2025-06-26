@@ -7,7 +7,6 @@ import {
   getStudentsByIdController,
   getStudentsController,
   patchStudentController,
-  upsertController,
   upsertStudentController,
 } from '../controllers/student.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
@@ -35,7 +34,7 @@ router.delete(
 
 router.put(
   '/student/:studentId',
-  ctrlWrapper(upsertController),
+  ctrlWrapper(),
 );
 router.put(
   '/students/:studentId',
