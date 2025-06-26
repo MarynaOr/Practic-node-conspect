@@ -6,15 +6,12 @@ import pino from 'pino-http';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { initMongoDB } from './db/initMongoDB.js';
-import {
-  getAllStudents,
-  getStudentId,
-} from './module-2/lesson-1/services/students.js';
+import studentRouter from './routers/students.js';
+import { errorHandler } from './middlewares/errorHandlers.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
 await initMongoDB();
-// import { getEnvVar } from './module-2/lesson-1/utils/getEnvVar.js';
 dotenv.config();
-// const PORT = Number(getEnvVar('PORT', '3000'));
 const PORT = Number(process.env.PORT);
 
 export const startServer = () => {
@@ -29,63 +26,31 @@ export const startServer = () => {
     }),
   );
 
-  //   app.use((req, res) => {
-  //     res.json({ message: `поточна дата: ${new Date().toLocaleString()}` });
-  //   });
-
   app.get('/', (req, res) => {
     res.json({
       message: `Hello World! ${new Date().toLocaleString()}`,
-      //   message: [{}],
     });
   });
+
+  app.use(studentRouter);
+
   app.get('/id/', (req, res) => {
     res.json({
       id: 5,
     });
   });
-
-  app.get('/student', async (req, res) => {
-    const students = await getAllStudents();
-    res.status(200).json({
-      data: students,
-    });
-  });
-
-  app.get(
-    '/students/:studentId',
-    async (req, res, next) => {
-      const { studentId } = req.params;
-      const student = await getStudentId(
-        studentId,
-      );
-
-      if (!student) {
-        res.status(404).json({
-          message: 'Student not found',
-        });
-      }
-      res.status(200).json({
-        dat: student,
-      });
-      return;
-    },
+  app.use(notFoundHandler);
+  // app.use('*', notFoundHandler);
+  app.use(errorHandler);
+  app.use(
+    express.json({
+      type: [
+        'application/json',
+        'application/vnd.api+json',
+      ],
+      limit: '100kb',
+    }),
   );
-
-  app.use((req, res, next) => {
-    res.status(404).json({
-      message: 'Not a found',
-    });
-    next();
-  });
-
-  app.use((err, req, res, next) => {
-    res.status(500).json({
-      message: 'Something went wrong',
-      error: err.message,
-    });
-  });
-
   app.listen(PORT, () => {
     console.log(
       `Server is running on port http://localhost:${PORT}`,
