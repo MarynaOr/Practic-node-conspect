@@ -35,10 +35,10 @@ export const deleteStudent = async (
 export const updateStudent = async (
   studentId,
   payload,
-  option = {},
+  options = {},
 ) => {
   const rawResult =
-    await StudentsCollection.findByIdAndUpdate(
+    await StudentsCollection.findOneAndUpdate(
       { _id: studentId },
       payload,
       {
@@ -47,7 +47,9 @@ export const updateStudent = async (
         ...options,
       },
     );
+
   if (!rawResult || !rawResult.value) return null;
+
   return {
     student: rawResult.value,
     isNew: Boolean(

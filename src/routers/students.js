@@ -6,7 +6,9 @@ import {
   deleteStudentController,
   getStudentsByIdController,
   getStudentsController,
+  patchStudentController,
   upsertController,
+  upsertStudentController,
 } from '../controllers/student.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
@@ -34,6 +36,15 @@ router.delete(
 router.put(
   '/student/:studentId',
   ctrlWrapper(upsertController),
+);
+router.put(
+  '/students/:studentId',
+  ctrlWrapper(upsertStudentController),
+);
+
+router.patch(
+  '/students/:studentId',
+  ctrlWrapper(patchStudentController),
 );
 
 export default router;
