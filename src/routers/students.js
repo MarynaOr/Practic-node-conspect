@@ -33,10 +33,6 @@ router.delete(
 );
 
 router.put(
-  '/student/:studentId',
-  ctrlWrapper(),
-);
-router.put(
   '/students/:studentId',
   ctrlWrapper(upsertStudentController),
 );
