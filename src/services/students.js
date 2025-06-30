@@ -2,12 +2,15 @@
 
 // Метод findById()  для пошуку одного документа
 
+import { SORT_ORDER } from '../contacts/index.js';
 import { StudentsCollection } from '../db/models/students.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
 export const getAllStudents = async ({
-  page,
-  perPage,
+  page = 1,
+  perPage = 10,
+  sortOrder = SORT_ORDER.ASC,
+  sortBy = '_id',
 }) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
@@ -21,6 +24,7 @@ export const getAllStudents = async ({
   const students = await studentsQuery
     .skip(skip)
     .limit(limit)
+    .sort({ [sortBy]: sortOrder })
     .exec();
 
   const paginationData = calculatePaginationData(

@@ -18,9 +18,15 @@ export const getStudentsController = async (
   const { page, perPage } = parsePaginationParams(
     req.query,
   );
+
+  const { sortBy, sortOrder } =
+    parsePaginationParams(req.query);
+
   const students = await getAllStudents({
     page,
     perPage,
+    sortBy,
+    sortOrder,
   });
   res.json({
     status: 200,
