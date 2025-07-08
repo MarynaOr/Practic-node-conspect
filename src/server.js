@@ -6,7 +6,7 @@ import pino from 'pino-http';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { initMongoDB } from './db/initMongoDB.js';
-import studentRouter from './routers/students.js';
+import router from './routers/index.js';
 import { errorHandler } from './middlewares/errorHandlers.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
@@ -32,7 +32,7 @@ export const startServer = () => {
     });
   });
 
-  app.use(studentRouter);
+  app.use(router);
 
   app.get('/id/', (req, res) => {
     res.json({
