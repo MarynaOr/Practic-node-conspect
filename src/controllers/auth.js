@@ -1,3 +1,4 @@
+import { ONE_DAY } from '../contacts/index.js';
 import {
   registerUser,
   userLogin,
@@ -20,5 +21,25 @@ export const loginUserController = async (
   req,
   res,
 ) => {
-  await userLogin(req.body);
+  const session = await userLogin(req.body);
+  res.cookie(
+    'refreshToken',
+    session.refreshToken,
+    {
+      httpOnly: true,
+      expires: new Date(Date.now() + ONE_DAY),
+    },
+  );
+  res.cookie('sessionId', session._id, {
+    httpOnly: true,
+    exppires: new Date(Date.now() + ONE_DAY),
+  });
+
+  res.json({
+    status: 200,
+    message: 'Successfully logged in an user!',
+    data: {
+      accessToken: session.accessToken,
+    },
+  });
 };

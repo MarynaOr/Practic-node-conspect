@@ -9,6 +9,7 @@ import { initMongoDB } from './db/initMongoDB.js';
 import router from './routers/index.js';
 import { errorHandler } from './middlewares/errorHandlers.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import cookieParser from 'cookie-parser';
 
 await initMongoDB();
 dotenv.config();
@@ -24,13 +25,13 @@ export const startServer = () => {
         target: 'pino-pretty',
       },
     }),
-  );
-
-  app.get('/', (req, res) => {
-    res.json({
-      message: `Hello World! ${new Date().toLocaleString()}`,
+  ),
+    app.use(cookieParser()),
+    app.get('/', (req, res) => {
+      res.json({
+        message: `Hello World! ${new Date().toLocaleString()}`,
+      });
     });
-  });
 
   app.use(router);
 
